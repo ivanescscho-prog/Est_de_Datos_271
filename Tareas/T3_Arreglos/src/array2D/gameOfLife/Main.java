@@ -1,4 +1,4 @@
-package array2D.GameOfLife;
+package array2D.gameOfLife;
 
 public class Main {
     public static void main(String[] args) {

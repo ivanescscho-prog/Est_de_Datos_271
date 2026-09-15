@@ -1,4 +1,4 @@
-package array2D.Ajedrez;
+package array2D.ajedrez;
 
 public class Main {
     public static void main(String[] args) {

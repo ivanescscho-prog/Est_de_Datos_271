@@ -1,4 +1,4 @@
-package array2D.Ajedrez;
+package array2D.ajedrez;
 
 public class Array2D <T> {
     // Atributos

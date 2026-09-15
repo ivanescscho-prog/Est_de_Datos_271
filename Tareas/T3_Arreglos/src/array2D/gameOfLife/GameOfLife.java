@@ -1,6 +1,6 @@
-package array2D.GameOfLife;
-import array2D.Ajedrez.Array2D;
-import javax.swing.*;
+package array2D.gameOfLife;
+import array2D.ajedrez.Array2D;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
