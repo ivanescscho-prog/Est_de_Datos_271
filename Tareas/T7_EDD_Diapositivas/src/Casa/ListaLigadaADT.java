@@ -75,6 +75,8 @@ public class ListaLigadaADT<T> {
         }
     }
 
+    // Metodos faltantes
+
     public boolean estaVacia() {
 
         return this.head == null;
