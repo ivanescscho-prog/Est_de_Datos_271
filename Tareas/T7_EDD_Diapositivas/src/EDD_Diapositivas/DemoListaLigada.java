@@ -1,5 +1,7 @@
 package EDD_Diapositivas;
 
+import Casa.ListaLigadaADT;
+
 public class DemoListaLigada {
     public static void main(String[] args) {
         ListaLigadaADT<String> lista = new ListaLigadaADT<>();

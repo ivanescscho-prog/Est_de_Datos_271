@@ -1,10 +1,10 @@
 package Repaso_Computadora;
 
 import Programa.Perro;
-import mx.unam.aragon.ico.edd.composicion.Computadora;
-import mx.unam.aragon.ico.edd.composicion.Procesador;
-import mx.unam.aragon.ico.edd.composicion.Ram;
-import mx.unam.aragon.ico.edd.composicion.Teclado;
+import Repaso_Computadora.Computadora;
+import Repaso_Computadora.Procesador;
+import Repaso_Computadora.Ram;
+import Repaso_Computadora.Teclado;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

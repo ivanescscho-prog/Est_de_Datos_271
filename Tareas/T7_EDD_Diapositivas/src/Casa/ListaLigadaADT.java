@@ -1,4 +1,6 @@
-package EDD_Diapositivas;
+package Casa;
+
+import EDD_Diapositivas.Nodo;
 
 public class ListaLigadaADT<T> {
     private Nodo<T> head;
@@ -72,4 +74,54 @@ public class ListaLigadaADT<T> {
             actual.setSiguiente(nuevoNodo);
         }
     }
+
+    public boolean estaVacia() {
+
+        return this.head == null;
+    }
+
+    public void agregarAlInicio(T valor) {
+        if (estaVacia()) {
+            this.head = new Nodo<>(valor);
+        } else {
+                 Nodo<T> nuevoNodo = new Nodo<>(valor, this.head);
+                 this.head = nuevoNodo;
+        }
+    }
+
+    public void eliminarElPrimero() {
+        if (!estaVacia()) {
+            this.head = this.head.getSiguiente();
+        } else {
+            System.out.println("La lista ya está vacía.");
+        }
+    }
+
+    public void eliminarElFinal() {
+        if (estaVacia()) {
+            System.out.println("La lista ya está vacía.");
+        } else if (this.head.getSiguiente() == null) {
+            this.head = null;
+        } else {
+            Nodo<T> actual = this.head;
+            while (actual.getSiguiente().getSiguiente() != null) {
+                actual = actual.getSiguiente();
+            }
+            actual.setSiguiente(null);
+        }
+    }
+
+    public int buscar(T valor) {
+        int posicion = 0;
+        Nodo<T> actual = this.head;
+        while (actual != null) {
+            if (actual.getDato().equals(valor)) {
+                return posicion;
+            }
+            actual = actual.getSiguiente();
+            posicion++;
+        }
+        return -1;
+    }
+
 }
