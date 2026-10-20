@@ -1,4 +1,4 @@
-package Laberinto;
+package EDD_Laberinto;
 
 // Tablero del laberinto
 

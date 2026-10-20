@@ -1,9 +1,9 @@
-package EDD_Laberinto;
+package Laberinto;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import Laberinto.Array2D;
+import EDD_Laberinto.Array2D;
 
 public class Main {
     public static void main(String[] args) {
