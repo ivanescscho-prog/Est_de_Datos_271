@@ -64,17 +64,30 @@ public class Main {
         System.out.println();
         laberintoP06.imprimirTablero();
 */
-        Nodo<String> nodoInicial01 = new Nodo<>("1,2");
-        Pila caminoCorrecto = new Pila<>(nodoInicial01);
+        Posicion posicionEntrada = new Posicion(10,10);
+
+        Nodo recorrido = new Nodo(posicionEntrada);
+        Pila<Posicion> caminoCorrecto = new Pila<>(recorrido);
+
+        /*
         caminoCorrecto.push("30");
         caminoCorrecto.push(19);
-        System.out.println(caminoCorrecto.toString());
+        System.out.println(caminoCorrecto.peek());
+
         caminoCorrecto.pop();
         caminoCorrecto.push("fin de la pila");
+        System.out.println(caminoCorrecto.peek());
+
+        caminoCorrecto.pop();
+        caminoCorrecto.pop();
+        */
+
+        System.out.println(caminoCorrecto.peek());
+        System.out.println(caminoCorrecto.peek().obtenerDatos("x"));
         System.out.println(caminoCorrecto.getTamanio());
-        System.out.println(caminoCorrecto.toString());
     }
 
+    // Extraer Tablero de un archivo .lab
     public static Array2D<Character> leerArchivo(String rutaArchivo) {
         Array2D<Character> laberinto = null;
 
@@ -113,16 +126,17 @@ public class Main {
         return laberinto;
     }
 
+    // Caracteres personalizados para el tablero
     private static char mapearSimbolo(char entrada) {
         switch (entrada) {
             case '1':
-                return '■';
+                return '■'; // Muro
             case '0':
-                return ' ';
+                return ' '; // Camino
             case 'E':
-                return 'E';
+                return 'E'; // Entrada
             case 'S':
-                return 'S';
+                return 'S'; // Salida
             default:
                 return entrada;
         }

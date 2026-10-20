@@ -52,8 +52,5 @@ public class Pila<T> {
         return tamanio;
     }
 
-    // Imprimir toda la pila
-    public String toString(){
-        return tope.pilaCompleta();
-    }
+
 }

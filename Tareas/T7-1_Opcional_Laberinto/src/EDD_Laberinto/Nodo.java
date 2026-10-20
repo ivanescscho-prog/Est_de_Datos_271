@@ -24,9 +24,4 @@ public class Nodo<T> {
     public void setSiguiente(Nodo<T> siguiente) {
         this.siguiente = siguiente;
     }
-
-    public String pilaCompleta() {
-        String s = "Nodo01" + "{" + "dato=" + dato + ", siguiente=" + siguiente + '}';
-        return s;
-    }
 }
