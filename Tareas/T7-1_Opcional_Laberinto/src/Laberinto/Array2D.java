@@ -2,7 +2,7 @@ package Laberinto;
 
 // Tablero del laberinto
 
-public class Array2D {
+public class Array2D <T> {
     private int noFilas;
     private int noColumnas;
     private Object[][] matriz;
@@ -13,53 +13,70 @@ public class Array2D {
 
     public Array2D(int noFilas, int noColumnas){
         this.noFilas = noFilas;
-        this.noFilas2 = noFilas;
         this.noColumnas = noColumnas;
-        this.noColumnas2 = noColumnas;
         this.matriz = new Object[noColumnas][noFilas];
+        this.tableroSolido();
     }
 
-    public int getNoColumnas() {
+    public int getNoFilas() {
         return noColumnas;
     }
 
-    public int getNoFilas(){
+    public int getNoColumnas(){
         return noFilas;
     }
 
     public Object getElemento(int fila, int columna){
-        if (fila >= 0 && fila <= noFilas && columna >= 0 && columna <= noColumnas){
+        if (validarRango(fila, columna)){
             return  matriz [fila][columna];
         } else {
-            return Array2D.avisoFueraDeRango(columna, fila);
+            avisoFueraDeRango(fila, columna);
+            return null;
         }
     }
 
-    public void setElemento(int columna, int fila, int elemento) {
-        if (fila >= 0 && fila <= noFilas && columna >= 0 && columna <= noColumnas) {
+    public void setElemento(int fila, int columna, T elemento) {
+        if (validarRango(fila, columna)) {
             matriz[fila][columna] = elemento;
         } else {
-            Array2D.avisoFueraDeRango(columna, fila);
+            avisoFueraDeRango(fila, columna);
+        }
+    }
+
+    public void imprimirTablero (){
+        for (int i = 0; i < noFilas; i++){
+            System.out.println();
+            for (int  j = 0; j < noColumnas; j++){
+                System.out.print(matriz[i][j] + " ");
+            }
         }
     }
 
     // Extras
 
-    private static int noColumnas2;
-    private static int noFilas2;
+    private void tableroSolido(){
+        for (int i = 0; i < noColumnas; i++) {
+            for (int j = 0; j < noFilas; j++) {
+                matriz [i][j] = "■";
+            }
+        }
+    }
 
-    private static Object avisoFueraDeRango(int columna, int fila){
+    private boolean validarRango(int fila, int columna){
+        return fila >= 0 && fila < noFilas && columna >= 0 && columna < noColumnas;
+    }
+
+    private void avisoFueraDeRango(int fila, int columna){
         System.out.println("Coordenadas fuera del rango");
-        if ((columna < 0 || columna > noColumnas2) && (fila < 0 || fila > noFilas2)){
+        if ((columna < 0 || columna > noColumnas) && (fila < 0 || fila > noFilas)){
             System.out.println("Número de columna y fila no valido, favor de confirmar");
         } else {
-            if (columna < 0 || columna > noColumnas2){
+            if (columna < 0 || columna > noColumnas){
                 System.out.println("Número de columna no valido, favor de confirmar");
             } else {
                 System.out.println("Número de fila no valido, favor de confirmar");
             }
         }
-        return null;
+        throw new IndexOutOfBoundsException("Posición (" + fila + ", " + columna + ") fuera de los límites del laberinto.");
     }
-
 }
