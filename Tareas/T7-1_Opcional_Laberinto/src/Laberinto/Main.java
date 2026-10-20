@@ -4,46 +4,49 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import EDD_Laberinto.Array2D;
+import EDD_Laberinto.Nodo;
+import EDD_Laberinto.Pila;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         Array2D<Character> laberintoP01 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
         }
 
         Array2D<Character> laberintoP02 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada2.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
         }
 
         Array2D<Character> laberintoP03 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada3.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
         }
 
         Array2D<Character> laberintoP04 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada4.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
         }
 
         Array2D<Character> laberintoP05 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada5.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
         }
 
         Array2D<Character> laberintoP06 = leerArchivo("Tareas/T7-1_Opcional_Laberinto/Entradas_Tableros/entrada7.lab");
-        // Si se cargó correctamente, puedes consultar o imprimir elementos
+
         if (laberintoP01 != null) {
             System.out.println("Dimensiones del laberinto: " + laberintoP01.getNoFilas() + "x" + laberintoP01.getNoColumnas());
             System.out.println("Elemento en (0,0): " + laberintoP01.getElemento(0, 0));
@@ -60,7 +63,16 @@ public class Main {
         laberintoP05.imprimirTablero();
         System.out.println();
         laberintoP06.imprimirTablero();
-
+*/
+        Nodo<String> nodoInicial01 = new Nodo<>("1,2");
+        Pila caminoCorrecto = new Pila<>(nodoInicial01);
+        caminoCorrecto.push("30");
+        caminoCorrecto.push(19);
+        System.out.println(caminoCorrecto.toString());
+        caminoCorrecto.pop();
+        caminoCorrecto.push("fin de la pila");
+        System.out.println(caminoCorrecto.getTamanio());
+        System.out.println(caminoCorrecto.toString());
     }
 
     public static Array2D<Character> leerArchivo(String rutaArchivo) {
@@ -76,16 +88,16 @@ public class Main {
             int filaActual = 0;
 
             while ((linea = br.readLine()) != null && filaActual < filas) {
-                // Separamos los valores por la coma
+
                 String[] valores = linea.split(",");
 
                 for (int colActual = 0; colActual < valores.length && colActual < columnas; colActual++) {
                     char simboloOriginal = valores[colActual].trim().charAt(0);
 
-                    // AQUÍ PUEDES HACER EL REEMPLAZO O MAPEO DE SÍMBOLOS:
+
                     char simboloMapeado = mapearSimbolo(simboloOriginal);
 
-                    // Guardamos el dato en tu Array2D
+
                     laberinto.setElemento(filaActual, colActual, simboloMapeado);
                 }
                 filaActual++;
