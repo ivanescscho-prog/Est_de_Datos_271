@@ -22,7 +22,7 @@ public class Posicion {
         return this.columna;
     }
 
-    private boolean validarDatos(){
+    public boolean validarDatos(){
         return (fila > -1 && columna > -1);
     }
 
@@ -36,7 +36,7 @@ public class Posicion {
         return "Al parecer todo esta bien, " + posicionActual();
     }
 
-    private String posicionActual(){
+    public String posicionActual(){
         return "Posicion actual: " + fila + ", " + columna;
     }
 

@@ -2,6 +2,8 @@ package EDD_Laberinto;
 
 // Tablero del laberinto
 
+import Laberinto.Posicion;
+
 public class Array2D <T> {
     private int noFilas;
     private int noColumnas;
@@ -34,6 +36,8 @@ public class Array2D <T> {
             return null;
         }
     }
+
+
 
     public void setElemento(int fila, int columna, T elemento) {
         if (validarRango(fila, columna)) {
@@ -78,5 +82,25 @@ public class Array2D <T> {
             }
         }
         throw new IndexOutOfBoundsException("Posición (" + fila + ", " + columna + ") fuera de los límites del laberinto.");
+    }
+
+
+    // Extras solo para el laberinto
+
+    public Object getElemento(Posicion posicion){
+        if (validarRango(posicion.getFila(), posicion.getColumna())){
+            return  matriz [posicion.getFila()][posicion.getColumna()];
+        } else {
+            avisoFueraDeRango(posicion.getFila(), posicion.getColumna());
+            return null;
+        }
+    }
+
+    public void setElemento(Posicion posicion, T elemento) {
+        if (validarRango(posicion.getFila(), posicion.getColumna())) {
+            matriz[posicion.getFila()][posicion.getColumna()] = elemento;
+        } else {
+            avisoFueraDeRango(posicion.getFila(), posicion.getColumna());
+        }
     }
 }

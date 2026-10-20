@@ -51,6 +51,4 @@ public class Pila<T> {
     public int getTamanio() {
         return tamanio;
     }
-
-
 }
