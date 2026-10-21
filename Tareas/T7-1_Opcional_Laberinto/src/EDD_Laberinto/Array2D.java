@@ -37,8 +37,6 @@ public class Array2D <T> {
         }
     }
 
-
-
     public void setElemento(int fila, int columna, T elemento) {
         if (validarRango(fila, columna)) {
             matriz[fila][columna] = elemento;
