@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class BackTracking {
-    private int posicionEntradaF;
-    private int posicionEntradaC;
     private int tamanioF;
     private int tamanioC;
     private char jugador = '♛';
@@ -18,12 +16,12 @@ public class BackTracking {
     private char caimoIncorrecto = '×';
     private String rutaArchivo;
     private Posicion posicionEntrada;
+    private Posicion posicionSalida;
     private Array2D<Character> laberinto = new Array2D<Character>();
     private Pila<Posicion> caminoCorrecto = new Pila<Posicion>();
 
     public BackTracking(){
-        this.posicionEntradaF = -1;
-        this.posicionEntradaC = -1;
+        this.posicionEntrada = new Posicion(-1, -1);
     }
 
     public BackTracking(String rutaArchivo) {
@@ -31,17 +29,7 @@ public class BackTracking {
     }
 
     public BackTracking(int posicionEntradaF, int posicionEntradaC) {
-        this.posicionEntradaF = posicionEntradaF-1;
-        this.posicionEntradaC = posicionEntradaC-1;
         this.posicionEntrada = new Posicion(posicionEntradaF-1, posicionEntradaC-1);
-    }
-
-    public int getPosicionEntradaF(){
-        return posicionEntradaF;
-    }
-
-    public int getPosicionEntradaC(){
-        return posicionEntradaC;
     }
 
     public Pila getCamino(){
@@ -49,6 +37,10 @@ public class BackTracking {
     }
 
     public Posicion getPosicionEntrada(){
+        return posicionEntrada;
+    }
+
+    public Posicion getPosicionSalida(){
         return posicionEntrada;
     }
 
@@ -61,7 +53,11 @@ public class BackTracking {
     }
 
     private boolean validarposicionEntrada() {
-        return getPosicionEntradaF() > -1 && getPosicionEntradaC() > -1;
+        return posicionEntrada.getFila() > -1 && posicionEntrada.getColumna() > -1;
+    }
+
+    private boolean validarposicionSalida() {
+        return posicionSalida.getFila() > -1 && posicionSalida.getColumna() > -1;
     }
 
     public void avisoEntrada(Posicion dato){
@@ -87,10 +83,11 @@ public class BackTracking {
 
                 System.out.println("Iniciarndo busqueda de la entrada...");
                 this.posicionEntrada = buscarEntrada();
-                this.posicionEntradaF = getPosicionEntradaF();
-                this.posicionEntradaC = getPosicionEntradaC();
+                System.out.println("Iniciarndo busqueda de la salida...");
+                this.posicionSalida = buscarSalida();
 
-                System.out.println("La entrada esta en las coordenadas: " + posicionEntradaF + ", " + posicionEntradaC);
+                System.out.println("La entrada esta en las coordenadas: " + (posicionEntrada.getFila()+1) + ", " + (posicionEntrada.getColumna()+1));
+                System.out.println("La salida esta en las coordenadas: " + (posicionSalida.getFila()+1) + ", " + (posicionSalida.getColumna()+1));
 
             }
 
@@ -157,7 +154,7 @@ public class BackTracking {
 
     // Establecer al jugador en la posición de entrada
     public void jugadorEnEntrada(){
-        laberinto.setElemento(posicionEntradaF,posicionEntradaC, jugador);
+        laberinto.setElemento(posicionEntrada.getFila(),posicionEntrada.getColumna(), jugador);
     }
 
     public void solucionarLaberinto(){
@@ -166,15 +163,31 @@ public class BackTracking {
         System.out.println("SOLUCION DEL LABERINTO MEDIANTE EL ALGORITMO DE BACKTRAKING");
         System.out.println("===========================================================");
 
-        Posicion posicionActual = this.posicionEntrada;
-        caminoCorrecto.push(this.posicionEntrada);
+        Posicion posicionActual = posicionEntrada;
+        caminoCorrecto.push(posicionEntrada);
 
-        for (int i = 0; i < 3; i++){
-            posicionActual = avanzar(posicionActual);
-            System.out.println("iteracion " + (i+1));
-            laberinto.imprimirTablero();
-            System.out.println("\n" + caminoCorrecto.peek());
-            posicionActual = caminoCorrecto.peek();
+
+        for (int i = 0; i < 1000; i++){
+            for (int j = 0; j < 1000; j++){
+                posicionActual = avanzar(posicionActual);
+
+                // System.out.println("iteracion " + (i+1));
+                // laberinto.imprimirTablero();
+                // System.out.println("\n" + caminoCorrecto.peek());
+                posicionActual = caminoCorrecto.peek();
+
+                if (posicionActual.getFila() == posicionSalida.getFila() && posicionActual.getColumna() == posicionSalida.getColumna()){
+
+                    laberinto.imprimirTablero();
+
+                    System.out.println();
+                    System.out.println("===========================================================");
+                    System.out.println("             ¡¡¡ LABERINTO RESUELTO !!!                    ");
+                    System.out.println("===========================================================");
+
+                    return;
+                }
+            }
         }
     }
 
@@ -210,6 +223,12 @@ public class BackTracking {
                     caminoCorrecto.push(posicionN);
                     return posicionN;
                 }
+                if (laberinto.getElemento(posicionN).equals('S')) {
+                    laberinto.setElemento(posicion, rastroCamino);
+                    laberinto.setElemento(posicionN, jugador);
+                    caminoCorrecto.push(posicionN);
+                    return posicionN;
+                }
             }
             return posicion;
         }
@@ -228,6 +247,12 @@ public class BackTracking {
                     caminoCorrecto.push(posicionN);
                     return posicionN;
                 }
+                if (laberinto.getElemento(posicionN).equals('S')) {
+                    laberinto.setElemento(posicion, rastroCamino);
+                    laberinto.setElemento(posicionN, jugador);
+                    caminoCorrecto.push(posicionN);
+                    return posicionN;
+                }
             }
             return posicion;
         }
@@ -241,6 +266,12 @@ public class BackTracking {
 
             if (posicionN.validarDatos()){
                 if (laberinto.getElemento(posicionN).equals(' ')) {
+                    laberinto.setElemento(posicion, rastroCamino);
+                    laberinto.setElemento(posicionN, jugador);
+                    caminoCorrecto.push(posicionN);
+                    return posicionN;
+                }
+                if (laberinto.getElemento(posicionN).equals('S')) {
                     laberinto.setElemento(posicion, rastroCamino);
                     laberinto.setElemento(posicionN, jugador);
                     caminoCorrecto.push(posicionN);
@@ -265,6 +296,12 @@ public class BackTracking {
                     caminoCorrecto.push(posicionN);
                     return posicionN;
                 }
+                if (laberinto.getElemento(posicionN).equals('S')) {
+                    laberinto.setElemento(posicion, rastroCamino);
+                    laberinto.setElemento(posicionN, jugador);
+                    caminoCorrecto.push(posicionN);
+                    return posicionN;
+                }
             }
             return posicion;
         }
@@ -282,19 +319,15 @@ public class BackTracking {
     private Posicion buscarEntrada() {
         Character elementoABuscar = 'E';
 
-
         for (int i = 0; i < tamanioF; i++) {
             for (int j = 0; j < tamanioC; j++) {
                 Posicion actual = new Posicion(i, j);
 
-
                 Character elementoActual = (Character) laberinto.getElemento(actual);
-                System.out.println("Coordenadas del elemento: " + laberinto.getNoFilas() + ", " + laberinto.getNoColumnas());
-                System.out.println("Revisando las coordenadas. Elemento en la celda: " + elementoActual);
+                // System.out.println("Coordenadas del elemento: " + laberinto.getNoFilas() + ", " + laberinto.getNoColumnas());
+                // System.out.println("Revisando las coordenadas. Elemento en la celda: " + elementoActual);
 
                 if (elementoActual != null && elementoActual.equals(elementoABuscar)) {
-                    this.posicionEntradaF = i;
-                    this.posicionEntradaC = j;
                     return actual;
                 }
             }
@@ -302,6 +335,28 @@ public class BackTracking {
 
         System.out.println("No hay una entrada definida según los parámetros.");
         System.out.println("Verifica que la entrada esté señalizada con el carácter E");
+        return null;
+    }
+
+    private Posicion buscarSalida() {
+        Character elementoABuscar = 'S';
+
+        for (int i = 0; i < tamanioF; i++) {
+            for (int j = 0; j < tamanioC; j++) {
+                Posicion actual = new Posicion(i, j);
+
+                Character elementoActual = (Character) laberinto.getElemento(actual);
+                // System.out.println("Coordenadas del elemento: " + laberinto.getNoFilas() + ", " + laberinto.getNoColumnas());
+                // System.out.println("Revisando las coordenadas. Elemento en la celda: " + elementoActual);
+
+                if (elementoActual != null && elementoActual.equals(elementoABuscar)) {
+                    return actual;
+                }
+            }
+        }
+
+        System.out.println("No hay una entrada definida según los parámetros.");
+        System.out.println("Verifica que la entrada esté señalizada con el carácter S");
         return null;
     }
 }
