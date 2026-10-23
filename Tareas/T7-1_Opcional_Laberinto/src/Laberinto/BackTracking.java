@@ -1,3 +1,5 @@
+// Algoritmo BackTracking. Construcción del laberinto y asignación de simbolo para el juego
+
 package Laberinto;
 
 import EDD_Laberinto.Array2D;
@@ -167,18 +169,20 @@ public class BackTracking {
         caminoCorrecto.push(posicionEntrada);
 
 
-        for (int i = 0; i < 1000; i++){
+        for (int i = 0; i < 1; i++){
             for (int j = 0; j < 1000; j++){
                 posicionActual = avanzar(posicionActual);
 
-                // System.out.println("iteracion " + (i+1));
                 // laberinto.imprimirTablero();
                 // System.out.println("\n" + caminoCorrecto.peek());
+                // System.out.println("iteracion " + (j+1));
                 posicionActual = caminoCorrecto.peek();
 
                 if (posicionActual.getFila() == posicionSalida.getFila() && posicionActual.getColumna() == posicionSalida.getColumna()){
 
                     laberinto.imprimirTablero();
+                    System.out.println("\n" + caminoCorrecto.peek());
+                    System.out.println("iteracion " + (j+1));
 
                     System.out.println();
                     System.out.println("===========================================================");
